@@ -3,10 +3,10 @@ from board import *
 from cell import Cell
 
 beige = (209, 170, 86)
-background_color = (255,255,255)
+background_color = (128,128,128)
 width = 600
 height = 600
-cell_size = 40
+cell_size = 50
 
 
 def start_screen(screen):
@@ -25,22 +25,24 @@ def start_screen(screen):
     easy_button_placement = pygame.Surface((easy_button.get_size()[0] + 20, easy_button.get_size()[1] + 20))
     easy_button_placement.fill(beige)
     easy_button_placement.blit(easy_button, (10, 10))
-    easy_button_rectangle = easy_button_placement.get_rect(center=(width - 460, height//2 + 150))
-    screen.blit(easy_button_placement, easy_button_rectangle)
+
     
     medium_button_placement = pygame.Surface((medium_button.get_size()[0] + 20, medium_button.get_size()[1] + 20))
     medium_button_placement.fill(beige)
     medium_button_placement.blit(medium_button, (10, 10))
-    medium_button_rectangle = medium_button_placement.get_rect(center=(width - 280, height // 2 + 250))
-    screen.blit(medium_button_placement, medium_button_rectangle)
 
     hard_button_placement = pygame.Surface((hard_button.get_size()[0] + 20, hard_button.get_size()[1] + 20))
     hard_button_placement.fill(beige)
     hard_button_placement.blit(hard_button, (10, 10))
-    hard_button_rectangle = hard_button_placement.get_rect(center=(width - 100, height // 2 + 350))
-    screen.blit(hard_button_placement, hard_button_rectangle)
 
-   
+    easy_button_rectangle = easy_button_placement.get_rect(center=(width - 300, height//2 + 150))
+    screen.blit(easy_button_placement, easy_button_rectangle)
+
+    medium_button_rectangle = medium_button_placement.get_rect(center=(width - 280, height // 2 + 250))
+    screen.blit(medium_button_placement, medium_button_rectangle)
+
+    hard_button_rectangle = hard_button_placement.get_rect(center=(width - 300, height // 2 + 350))
+    screen.blit(hard_button_placement, hard_button_rectangle)
 
     pygame.display.update()
     
@@ -98,9 +100,9 @@ def winner_screen(screen):
     winner_font = pygame.font.SysFont("AovelSansRounded-rdDL.ttf", 100)
     button_font = pygame.font.SysFont("AovelSansRounded-rdDL.ttf", 50)
 
-    win_surf = winner_font.render("You Win!", True, beige)
+    win_surf = winner_font.render("You Win!", True, (0,255,0))
     win_rect = win_surf.get_rect(center=(width//2 + 38, height//2 - 150))
-    screen.blt(win_surf, win_rect)
+    screen.blit(win_surf, win_rect)
 
     exit_text = button_font.render("EXIT", True, (255, 255, 255))
     exit_surf = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
@@ -130,9 +132,9 @@ def loser_screen(screen):
 
     lose_surf = loser_font.render("GAME OVER", True, (255, 0, 0))
     lose_rect = lose_surf.get_rect(center=(width//2 + 38, height//2 - 150))
-    screen.blit(lose_rect, lose_rect)
+    screen.blit(lose_surf, lose_rect)
 
-    restart_text = button_font.render("RESENT", True, (255, 255, 255))
+    restart_text = button_font.render("RESTART", True, (255, 255, 255))
     restart_surf = pygame.Surface((restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20))
     restart_surf.fill(beige)
     restart_surf.blit(restart_text, (10, 10))
@@ -150,6 +152,9 @@ def loser_screen(screen):
                     return
 
 def main():
+    width = 675
+    height = 750
+    cell_size = 75
     pygame.init()
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Sudoku Game")

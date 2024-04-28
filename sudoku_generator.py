@@ -40,6 +40,7 @@ class SudokuGenerator:
             [0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]
         self.box_length = math.isqrt(row_length)
+        self.solution = None
 
     '''
 	Returns a 2D python list of numbers which represents the board
@@ -211,6 +212,7 @@ class SudokuGenerator:
     def fill_values(self):
         self.fill_diagonal()
         self.fill_remaining(0, self.box_length)
+        self.solution = copy.deepcopy(self.board)
         return self.board
 
     '''
@@ -233,7 +235,8 @@ class SudokuGenerator:
             if self.board[random_row][random_col] != 0:
                 self.board[random_row][random_col] = 0
                 removed_cells += 1
-
+    def get_solution(self):
+        return self.solution
 
 '''
 DO NOT CHANGE
@@ -253,7 +256,8 @@ Return: list[list] (a 2D Python list to represent the board)
 def generate_sudoku(size, removed):
     sudoku = SudokuGenerator(size, removed)
     sudoku.fill_values()
-    board = sudoku.get_board()
+    solution = copy.deepcopy(sudoku.get_board())
     sudoku.remove_cells()
     board = sudoku.get_board()
-    return board
+    return board, solution
+

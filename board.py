@@ -13,23 +13,19 @@ class Board:
         self.screen = screen
         self.difficulty = difficulty
         self.cell_size = cell_size
-
         if self.difficulty == "Easy":
             self.val = 30
         elif self.difficulty == 'Medium':
             self.val = 40
         else:
             self.val = 50
-        self.original = generate_sudoku(9, self.val)
+
+        self.original, self.answer_key = generate_sudoku(9, self.val)
         self.board = copy.deepcopy(self.original)
         self.cells = [
-            [
-                Cell(self.original[i][j], i, j, self.cell_size, self.screen)
-                for j in range(self.cols)
-            ]
+            [Cell(self.board[i][j], i, j, self.cell_size, self.screen) for j in range(self.cols)]
             for i in range(self.rows)
         ]
-
     def draw(self):
         for i in range(self.rows):
             for j in range(self.cols):
@@ -137,12 +133,8 @@ class Board:
         return True
 
     def check_board(self):
-        i = 0
-        while i < 9:
-            j = 0
-            while j < 9:
+        for i in range(9):
+            for j in range(9):
                 if self.board[i][j] != self.answer_key[i][j]:
                     return False
-                j += 1
-            i += 1
         return True
