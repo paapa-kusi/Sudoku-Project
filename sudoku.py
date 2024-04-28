@@ -1,7 +1,6 @@
 import pygame, sys
-# from board import *
-# from constant import *
-
+from board import *
+from cell import Cell
 
 beige = (209, 170, 86)
 background_color = (255,255,255)
@@ -155,5 +154,97 @@ def main():
     pygame.display.set_caption("Sudoku Game")
 
     difficulty = start_screen(screen)
+    
+    board = Board(9, 9, width, height, screen, difficulty, cell_size)
+    screen.fill(beige)
+    board.draw()
+    board.initialize_board()
+
+    selected_row, selected_col = 0, 0
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            restart, reset, exit = sudo_buttons(screen)
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                row, col = board.click()
+                if row is not None and col is not None:
+                    selected_row, selected_col = board.select(row, col)
+                if restart.collidepoint(event.pos):
+                    difficulty = game_start_screen(screen)
+                    board = Board(9, 9, width, height, screen, difficulty, cell_size)
+                    screen.fill(beige)
+                    board.draw()
+                    board.initialize_board()
+                if reset.collidepoint(event.pos):
+                    board.reset_to_original()
+                    board.draw()
+                    board.initialize_board()
+                if exit.collidepoint(event.pos):
+                    pygame.quit()
+                    sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
+                    board.place_number()
+                if event.key == pygame.K_1:
+                    board.sketch(1)
+                if event.key == pygame.K_2:
+                    board.sketch(2)
+                if event.key == pygame.K_3:
+                    board.sketch(3)
+                if event.key == pygame.K_4:
+                    board.sketch(4)
+                if event.key == pygame.K_5:
+                    board.sketch(5)
+                if event.key == pygame.K_6:
+                    board.sketch(6)
+                if event.key == pygame.K_7:
+                    board.sketch(7)
+                if event.key == pygame.K_8:
+                    board.sketch(8)
+                if event.key == pygame.K_9:
+                    board.sketch(9)
+                if event.key == pygame.K_BACKSPACE:
+                    board.clear()
+                if event.key == pygame.K_UP:
+                    if 0 <= selected_row - 1:
+                        selected_row, selected_col = board.select(selected_row - 1, selected_col)
+                if event.key == pygame.K_DOWN:
+                    if selected_row + 1 <= 8:
+                        selected_row, selected_col = board.select(selected_row + 1, selected_col)
+                if event.key == pygame.K_LEFT:
+                    if selected_col - 1 >= 0:
+                        selected_row, selected_col = board.select(selected_row, selected_col - 1)
+                if event.key == pygame.K_RIGHT:
+                    if selected_col + 1 <= 8:
+                        selected_row, selected_col = board.select(selected_row, selected_col + 1)
+                if board.is_full():
+                    if board.check_board():
+                        game_won(screen)
+                        pygame.quit()
+                        sys.exit()
+
+                    else:
+                        game_lost(screen)
+                        difficulty = game_start_screen(screen)
+                        board = Board(9, 9, width, height, screen, difficulty, cell_size)
+                        screen.fill(beige)
+                        board.draw()
+                        board.initialize_board()
+
+                else:
+                    pygame.display.flip()
+                    pygame.display.update()
+        pygame.display.flip()
+        pygame.display.update()
+
+
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
 
 
