@@ -109,7 +109,7 @@ class SudokuGenerator:
         numbers = []
         for i in range(row_start, row_start+3):
             for j in range(col_start, col_start+3):
-                numbers = numbers + self.board[i][j]
+                numbers = numbers + [self.board[i][j]]
 
         if num in numbers:
             return False

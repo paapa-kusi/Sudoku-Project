@@ -3,6 +3,7 @@ import pygame
 from sudoku_generator import generate_sudoku
 from cell import Cell
 
+
 class Board:
     def __init__(self, rows, cols, width, height, screen, difficulty, cell_size):
         self.rows = rows
@@ -19,8 +20,7 @@ class Board:
             self.val = 40
         else:
             self.val = 50
-        self.answer_key = None
-        self.original, self.answer_key = generate_sudoku(9, self.val)
+        self.original = generate_sudoku(9, self.val)
         self.board = copy.deepcopy(self.original)
         self.cells = [
             [
@@ -82,7 +82,7 @@ class Board:
         for row in self.cells:
             for cell in row:
                 if cell.selected:
-                    cell.set_sketched_value(value)
+                    cell.set_sketched(value)
                     cell.draw()
 
     def place_number(self):
@@ -94,7 +94,7 @@ class Board:
                 cell = row[j]
                 if cell.selected:
                     if cell.value == 0:
-                        cell.set_cell_value(cell.sketched_value)
+                        cell.set_cell_value(cell.sketched)
                         cell.sketched_value = 0
                         self.draw()
                         self.board[i][j] = cell.value

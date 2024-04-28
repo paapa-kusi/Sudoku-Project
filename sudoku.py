@@ -6,6 +6,7 @@ beige = (209, 170, 86)
 background_color = (255,255,255)
 width = 600
 height = 600
+cell_size = 40
 
 
 def start_screen(screen):
@@ -174,7 +175,7 @@ def main():
                 if row is not None and col is not None:
                     selected_row, selected_col = board.select(row, col)
                 if restart.collidepoint(event.pos):
-                    difficulty = game_start_screen(screen)
+                    difficulty = start_screen(screen)
                     board = Board(9, 9, width, height, screen, difficulty, cell_size)
                     screen.fill(beige)
                     board.draw()
@@ -223,13 +224,13 @@ def main():
                         selected_row, selected_col = board.select(selected_row, selected_col + 1)
                 if board.is_full():
                     if board.check_board():
-                        game_won(screen)
+                        winner_screen(screen)
                         pygame.quit()
                         sys.exit()
 
                     else:
-                        game_lost(screen)
-                        difficulty = game_start_screen(screen)
+                        loser_screen(screen)
+                        difficulty = start_screen(screen)
                         board = Board(9, 9, width, height, screen, difficulty, cell_size)
                         screen.fill(beige)
                         board.draw()

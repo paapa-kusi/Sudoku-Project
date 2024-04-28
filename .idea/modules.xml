@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/Sudoku-Project.iml" filepath="$PROJECT_DIR$/.idea/Sudoku-Project.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/.idea/Untitled.iml" filepath="$PROJECT_DIR$/.idea/Untitled.iml" />
->>>>>>> f6075f1 (:3)
     </modules>
   </component>
 </project>
